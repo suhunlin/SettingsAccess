@@ -51,8 +51,7 @@ public class MainActivity extends AppCompatActivity {
         getContentValues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                getContentValuesFun();
             }
         });
     }
@@ -71,5 +70,18 @@ public class MainActivity extends AppCompatActivity {
             stringBuffer.append(cursor.getColumnName(i)+"\n");
         }
         fieldName.setText(stringBuffer);
+    }
+    private void getContentValuesFun(){
+        Uri uri = Settings.System.CONTENT_URI;
+        Cursor cursor = contentResolver.query(uri, null, null, null, null);
+        while(cursor.moveToNext()){
+            HashMap<String, String> values = new HashMap<>();
+            String nameValue = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+            String value = cursor.getString(cursor.getColumnIndexOrThrow("value"));
+            String result = String.format("%s = %s", nameValue, value);
+            values.put(from[0], result);
+            data.add(values);
+            simpleAdapter.notifyDataSetChanged();
+        }
     }
 }
