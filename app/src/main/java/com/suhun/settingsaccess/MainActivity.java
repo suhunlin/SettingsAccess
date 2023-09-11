@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
             values.put(from[0], result);
             data.add(values);
             simpleAdapter.notifyDataSetChanged();
+            cursor.close();
         }
     }
 }
